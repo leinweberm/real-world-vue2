@@ -24,23 +24,17 @@
 </template>
 
 <script>
-import EventService from '@/services/EventService';
+import { mapState, mapActions } from 'vuex';
 export default {
    props: ["id"],
-   data() {
-      return {
-         event: {}
-      }
-   },
    created() {
-      EventService.getEvent(this.id)
-         .then(response => {
-            this.event = response.data;
-         })
-         .catch(error => {
-            console.log('Error: ' + error.message);
-         })
-   }
+      this.fetchEvent(this.id)
+   },
+   computed: mapState({
+      event: state => state.event.event
+   }),
+   //jiny zapis ('namespace', ['actions to map'])
+   methods: mapActions('event', ['fetchEvent'])
 };
 </script>
 
